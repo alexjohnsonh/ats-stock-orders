@@ -150,8 +150,9 @@ const CONFIG = {
   STOCK_TAB: 'ATS Stock',
   // Which businesses this app shows
   SHOW_BUSINESSES: ['ATS'],
-  // ATS order statuses
-  ATS_STATUSES: ['Order Confirmed', 'Being Made', 'At Galvanisers', 'Being Packed', 'Shipped'],
+  // ATS order statuses — two flows
+  STANDARD_STATUSES: ['Order Confirmed', 'Being Packed', 'Shipped'],
+  SPECIAL_STATUSES: ['Order Confirmed', 'Being Made', 'At Galvanisers', 'Being Packed', 'Shipped'],
   // Users who can log into this app
   USERS: [
     { name: 'Steve', pin: '3333', role: 'fabricator' }
@@ -297,6 +298,28 @@ async function loadStockFixed() {
     }
   }
   return { standard, odd };
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function cleanProducts(productsStr, qtyStr) {
+  const products = productsStr.split(',').map(p => p.trim()).filter(p => p);
+  const qtys = qtyStr.split(',').map(q => q.trim()).filter(q => q);
+  if (products.length === 0) return { display: '—', codes: [] };
+  const parts = products.map((p, i) => qtys[i] ? `${p} (${qtys[i]})` : p);
+  return { display: parts.join(', '), codes: products };
+}
+
+function isStandardOrder(productCodes) {
+  const standardCodes = state.stock.standard.map(s => s.productCode.toUpperCase());
+  return productCodes.every(code => standardCodes.includes(code.toUpperCase()));
+}
+
+function getStatusesForOrder(order) {
+  const { codes } = cleanProducts(order.products, order.qty);
+  if (codes.length === 0) return CONFIG.SPECIAL_STATUSES; // default to special if unknown
+  return isStandardOrder(codes) ? CONFIG.STANDARD_STATUSES : CONFIG.SPECIAL_STATUSES;
 }
 
 // ═══════════════════════════════════════════
@@ -470,19 +493,21 @@ function renderOrdersTab(active, archived) {
 }
 
 function renderOrderCard(order, idx, canAdvance) {
-  const statuses = CONFIG.ATS_STATUSES;
+  const statuses = getStatusesForOrder(order);
+  const { display, codes } = cleanProducts(order.products, order.qty);
+  const isStandard = codes.length > 0 && isStandardOrder(codes);
   const currentIdx = statuses.indexOf(order.status);
   const nextStatus = currentIdx < statuses.length - 1 ? statuses[currentIdx + 1] : null;
+  const flowLabel = isStandard ? 'Standard' : 'Special';
 
   return `
     <div class="order-card" data-status="${order.status}">
       <div class="order-top">
-        <span class="order-po">${order.orderPO || 'No PO'}</span>
+        <span class="order-po">${order.orderPO || 'No PO'} <span style="font-size:10px;font-weight:600;color:${isStandard ? 'var(--green)' : 'var(--purple)'};background:${isStandard ? '#F0FDF4' : '#F5F3FF'};padding:2px 6px;border-radius:4px;">${flowLabel}</span></span>
         <span class="order-date">${order.dateOrdered}</span>
       </div>
       <div class="order-customer">${order.customer}</div>
-      <div class="order-product">${order.products}</div>
-      <div class="order-qty">Qty: ${order.qty}</div>
+      <div class="order-product">${display}</div>
       <div class="order-bottom">
         <span class="status-badge ${canAdvance && nextStatus ? 'clickable' : ''}"
               data-status="${order.status}"
