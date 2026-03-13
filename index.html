@@ -254,11 +254,10 @@ async function loadStock() {
 // Let me fix the parser:
 
 async function loadStockFixed() {
-  const rows = await fetchSheet(CONFIG.STOCK_TAB, 'A1:G50');
+  const rows = await fetchSheet(CONFIG.STOCK_TAB, 'A1:H50');
   const standard = [];
   const odd = [];
   let section = null;
-  let rowOffset = 0;
 
   for (let i = 0; i < rows.length; i++) {
     const r = rows[i];
@@ -276,17 +275,18 @@ async function loadStockFixed() {
     }
 
     if (section === 'standard') {
-      // B=Product Code, C=QTY, D=QTY in prod, E=Due date, F=Qty back order, G=Who
+      // B=Product Code, C=QTY, D=QTY in prod, E=Due date, F=Qty back order, G=Who, H=Notes
       const code = (r[1] || '').trim();
       if (!code || code === 'Product Code') continue;
       standard.push({
-        sheetRow: i + 1, // 1-indexed for API
+        sheetRow: i + 1,
         productCode: code,
         qty: r[2] || '0',
         qtyInProd: r[3] || '',
         dueDate: r[4] || '',
         qtyBackOrder: r[5] || '',
-        who: r[6] || ''
+        who: r[6] || '',
+        notes: r[7] || ''
       });
     } else if (section === 'odd') {
       const code = (r[1] || '').trim();
@@ -294,7 +294,8 @@ async function loadStockFixed() {
       odd.push({
         sheetRow: i + 1,
         productCode: code,
-        qty: r[2] || '0'
+        qty: r[2] || '0',
+        notes: r[3] || ''
       });
     }
   }
@@ -538,6 +539,7 @@ function renderStockTab() {
         <div class="stock-row"><span class="stock-label">Due Date</span><span class="stock-value">${editing ? `<input type="text" data-field="dueDate" value="${s.dueDate}" placeholder="DD/MM">` : (s.dueDate || '—')}</span></div>
         <div class="stock-row"><span class="stock-label">Back Order</span><span class="stock-value">${editing ? `<input type="number" data-field="qtyBackOrder" value="${s.qtyBackOrder}">` : (s.qtyBackOrder || '—')}</span></div>
         <div class="stock-row"><span class="stock-label">Who?</span><span class="stock-value">${editing ? `<input type="text" data-field="who" value="${s.who}">` : (s.who || '—')}</span></div>
+        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value">${editing ? `<input type="text" data-field="notes" value="${s.notes}" placeholder="e.g. missing x member" style="width:160px;">` : (s.notes || '—')}</span></div>
         ${editing ? `
           <div class="stock-save-row">
             <button class="stock-cancel-btn" data-action="cancel-edit">Cancel</button>
@@ -562,6 +564,7 @@ function renderStockTab() {
       <div class="stock-card" data-stock-id="odd-${i}">
         <div class="stock-code">${s.productCode}</div>
         <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value">${editing ? `<input type="number" data-field="qty" value="${s.qty}">` : s.qty}</span></div>
+        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value">${editing ? `<input type="text" data-field="notes" value="${s.notes || ''}" placeholder="e.g. missing x member" style="width:160px;">` : (s.notes || '—')}</span></div>
         ${editing ? `
           <div class="stock-save-row">
             <button class="stock-cancel-btn" data-action="cancel-edit">Cancel</button>
@@ -581,6 +584,7 @@ function renderStockTab() {
       <div class="stock-card" style="border:2px dashed var(--orange);">
         <div class="stock-row"><span class="stock-label">Product Code</span><span class="stock-value"><input type="text" id="new-odd-code" placeholder="e.g. WC7575D" style="width:140px;"></span></div>
         <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value"><input type="number" id="new-odd-qty" value="0"></span></div>
+        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value"><input type="text" id="new-odd-notes" placeholder="Optional" style="width:160px;"></span></div>
         <div class="stock-save-row">
           <button class="stock-cancel-btn" data-action="cancel-add-odd">Cancel</button>
           <button class="stock-save-btn" data-action="save-new-odd">Add</button>
@@ -751,10 +755,11 @@ function attachEvents() {
     el.onclick = async () => {
       const code = (document.getElementById('new-odd-code')?.value || '').trim();
       const qty = document.getElementById('new-odd-qty')?.value || '0';
+      const notes = (document.getElementById('new-odd-notes')?.value || '').trim();
       if (!code) { showToast('⚠️ Enter a product code'); return; }
-      const newItem = { sheetRow: null, productCode: code, qty: qty };
+      const newItem = { sheetRow: null, productCode: code, qty: qty, notes: notes };
       state.stock.odd.push(newItem);
-      const success = await updateStock(code, CONFIG.STOCK_TAB, { qty, action: 'add-odd' });
+      const success = await updateStock(code, CONFIG.STOCK_TAB, { qty, notes, action: 'add-odd' });
       state.addingOddStock = false;
       showToast(success ? `✓ ${code} added` : `✓ Added locally (webhook pending)`);
       render();
