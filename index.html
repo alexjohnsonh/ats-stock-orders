@@ -143,7 +143,7 @@ const CONFIG = {
   SHEET_ID: '1SE6dA4DqPS4KLxeEWLx4os-b-QmCS_Nr2d6_xomZY60',
   API_KEY: 'AIzaSyD0JUH3xz8rJHEHz12XHmsbYI5YPWDf1hE',
   // Zapier webhook URLs — replace with your actual webhooks
-  WEBHOOK_STATUS: 'YOUR_ZAPIER_STATUS_WEBHOOK_URL',
+  WEBHOOK_STATUS: 'https://hooks.zapier.com/hooks/catch/24033816/uphhw3h/',
   WEBHOOK_STOCK: 'YOUR_ZAPIER_STOCK_WEBHOOK_URL',
   // Sheet tab names
   ORDERS_TAB: 'ATS Orders',
@@ -335,8 +335,7 @@ async function updateStatus(orderPO, newStatus) {
   try {
     await fetch(CONFIG.WEBHOOK_STATUS, {
       method: 'POST',
-      body: JSON.stringify({ orderPO, newStatus, timestamp: new Date().toISOString(), app: 'ATS' }),
-      headers: { 'Content-Type': 'application/json' }
+      body: JSON.stringify({ orderPO, newStatus, timestamp: new Date().toISOString(), business: 'ATS' })
     });
     return true;
   } catch (e) {
@@ -353,8 +352,7 @@ async function updateStock(productCode, tab, data) {
   try {
     await fetch(CONFIG.WEBHOOK_STOCK, {
       method: 'POST',
-      body: JSON.stringify({ productCode, tab, ...data, timestamp: new Date().toISOString() }),
-      headers: { 'Content-Type': 'application/json' }
+      body: JSON.stringify({ productCode, tab, ...data, timestamp: new Date().toISOString() })
     });
     return true;
   } catch (e) {
