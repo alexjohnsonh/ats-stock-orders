@@ -339,7 +339,7 @@ async function updateStatus(orderPO, newStatus) {
   try {
     await fetch(CONFIG.WEBHOOK_STATUS, {
       method: 'POST',
-      body: JSON.stringify({ orderPO, newStatus, timestamp: new Date().toISOString(), business: 'ATS' })
+      body: JSON.stringify({ orderPO, newStatus, timestamp: new Date().toISOString(), business: 'Advanced Traffic Supplies' })
     });
     return true;
   } catch (e) {
