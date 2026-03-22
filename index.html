@@ -317,6 +317,18 @@ function cleanProducts(productsStr, qtyStr) {
   return { display: parts.join(', '), codes: products };
 }
 
+function formatDueDate(val) {
+  if (!val || val === '-' || val === '—') return '—';
+  const s = String(val).trim();
+  // Already has a slash
+  if (s.includes('/')) return s;
+  // 4 digits like 1504 → 15/04
+  if (/^\d{4}$/.test(s)) return s.slice(0, 2) + '/' + s.slice(2);
+  // 3 digits like 504 → 5/04
+  if (/^\d{3}$/.test(s)) return s.slice(0, 1) + '/' + s.slice(1);
+  return s;
+}
+
 function isStandardOrder(productCodes) {
   const standardCodes = state.stock.standard.map(s => s.productCode.toUpperCase());
   return productCodes.every(code => standardCodes.includes(code.toUpperCase()));
@@ -543,7 +555,7 @@ function renderStockTab() {
         <div class="stock-code">${s.productCode}</div>
         <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value">${editing ? `<input type="number" data-field="qty" value="${s.qty}">` : s.qty}</span></div>
         <div class="stock-row"><span class="stock-label">In Production</span><span class="stock-value">${editing ? `<input type="number" data-field="qtyInProd" value="${s.qtyInProd}">` : (s.qtyInProd || '—')}</span></div>
-        <div class="stock-row"><span class="stock-label">Due Date</span><span class="stock-value">${editing ? `<input type="text" data-field="dueDate" value="${s.dueDate}" placeholder="DD/MM">` : (s.dueDate || '—')}</span></div>
+        <div class="stock-row"><span class="stock-label">Due Date</span><span class="stock-value">${editing ? `<input type="text" data-field="dueDate" value="${s.dueDate}" placeholder="DD/MM">` : formatDueDate(s.dueDate)}</span></div>
         <div class="stock-row"><span class="stock-label">Back Order</span><span class="stock-value">${editing ? `<input type="number" data-field="qtyBackOrder" value="${s.qtyBackOrder}">` : (s.qtyBackOrder || '—')}</span></div>
         <div class="stock-row"><span class="stock-label">Who?</span><span class="stock-value">${editing ? `<input type="text" data-field="who" value="${s.who}">` : (s.who || '—')}</span></div>
         <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value">${editing ? `<input type="text" data-field="notes" value="${s.notes}" placeholder="e.g. missing x member" style="width:160px;">` : (s.notes || '—')}</span></div>
