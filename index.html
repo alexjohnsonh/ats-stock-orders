@@ -19,6 +19,7 @@
   --amber: #F59E0B;
   --purple: #8B5CF6;
   --green: #22C55E;
+  --red: #EF4444;
   --grey: #94A3B8;
   --bg: #F3F4F6;
   --card: #FFFFFF;
@@ -31,7 +32,6 @@ body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; background
 button { font-family: inherit; cursor: pointer; border: none; }
 input, select { font-family: inherit; }
 
-/* ── Login ── */
 .login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%); padding: 20px; }
 .login-box { background: var(--card); border-radius: 24px; padding: 40px 28px; width: 100%; max-width: 340px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
 .login-brand { font-size: 12px; font-weight: 700; letter-spacing: 3px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; }
@@ -48,28 +48,23 @@ input, select { font-family: inherit; }
 .pin-btn { padding: 13px 0; border-radius: 10px; border: 1px solid var(--border); background: white; font-size: 20px; font-weight: 600; color: var(--text); transition: all 0.1s; }
 .pin-btn:active { background: var(--bg); transform: scale(0.95); }
 .login-back { margin-top: 14px; background:none; color: var(--text-muted); font-size: 12px; text-decoration: underline; }
-
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
 .shake { animation: shake 0.4s ease; }
 
-/* ── App Shell ── */
 .app-header { position:sticky; top:0; z-index:100; background: var(--orange); color: white; padding: 16px 20px; display:flex; align-items:center; justify-content:space-between; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
 .app-header h1 { font-size: 17px; font-weight: 700; }
 .app-header-logo { height: 28px; border-radius: 4px; }
 .logout-btn { background: rgba(255,255,255,0.2); color: white; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; }
-.logout-btn:active { background: rgba(255,255,255,0.3); }
 
-/* ── Tabs ── */
 .tab-bar { display:flex; background: white; border-bottom: 1px solid var(--border); position: sticky; top: 61px; z-index: 99; }
-.tab-btn { flex:1; padding: 12px 0; font-size: 13px; font-weight: 600; color: var(--text-muted); background: none; border-bottom: 3px solid transparent; transition: all 0.15s; }
+.tab-btn { flex:1; padding: 12px 0; font-size: 13px; font-weight: 600; color: var(--text-muted); background: none; border-bottom: 3px solid transparent; transition: all 0.15s; position: relative; }
 .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+.tab-alert-dot { position: absolute; top: 8px; right: calc(50% - 22px); width: 8px; height: 8px; background: var(--red); border-radius: 50%; }
 
-/* ── Content ── */
 .content { padding: 16px; max-width: 600px; margin: 0 auto; padding-bottom: 100px; }
 .section-title { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 10px; }
 .section-title:first-child { margin-top: 4px; }
 
-/* ── Order Card ── */
 .order-card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid var(--grey); transition: all 0.2s; }
 .order-card[data-status="Order Created"] { border-left-color: var(--grey); }
 .order-card[data-status="Order Confirmed"] { border-left-color: var(--blue); }
@@ -82,22 +77,21 @@ input, select { font-family: inherit; }
 .order-date { font-size: 11px; color: var(--text-muted); }
 .order-customer { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
 .order-product { font-size: 13px; font-weight: 500; }
-.order-qty { font-size: 12px; color: var(--text-muted); }
 .order-bottom { display:flex; justify-content:space-between; align-items:center; margin-top: 10px; }
 .status-badge { display:inline-flex; align-items:center; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; color: white; transition: all 0.15s; }
 .status-badge.clickable { box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
-.status-badge.clickable:active { transform: scale(0.95); filter: brightness(0.9); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+.status-badge.clickable:active { transform: scale(0.95); filter: brightness(0.9); }
 .status-badge[data-status="Order Created"] { background: var(--grey); }
 .status-badge[data-status="Order Confirmed"] { background: var(--blue); }
 .status-badge[data-status="Being Made"] { background: var(--amber); }
 .status-badge[data-status="At Galvanisers"] { background: var(--purple); }
 .status-badge[data-status="Being Packed"] { background: var(--green); }
 .status-badge[data-status="Shipped"] { background: var(--grey); }
-.status-next { font-size: 11px; color: var(--text-muted); }
 
-/* ── Stock Card ── */
-.stock-card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-.stock-code { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.stock-card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid transparent; }
+.stock-card.stock-alert { border-left-color: var(--red); }
+.stock-alert-badge { display:inline-flex; align-items:center; gap: 4px; background: #FEF2F2; color: var(--red); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-bottom: 8px; }
+.stock-code { font-size: 15px; font-weight: 700; margin-bottom: 8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
 .stock-row { display:flex; justify-content:space-between; align-items:center; padding: 5px 0; border-bottom: 1px solid #F3F4F6; font-size: 13px; }
 .stock-row:last-child { border-bottom: none; }
 .stock-label { color: var(--text-muted); }
@@ -106,42 +100,32 @@ input, select { font-family: inherit; }
 .stock-value input:focus { outline: none; border-color: var(--orange); }
 .stock-save-row { display: flex; justify-content: flex-end; margin-top: 10px; gap: 8px; }
 .stock-save-btn { background: var(--orange); color: white; padding: 8px 20px; border-radius: 8px; font-size: 12px; font-weight: 700; }
-.stock-save-btn:active { transform: scale(0.95); }
 .stock-cancel-btn { background: var(--bg); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; }
 
-/* ── Modal ── */
 .modal-overlay { position:fixed; inset:0; background: rgba(0,0,0,0.5); z-index:200; display:flex; align-items:flex-end; justify-content:center; opacity:0; pointer-events:none; transition: opacity 0.2s; }
 .modal-overlay.open { opacity:1; pointer-events:all; }
 .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 24px 20px; transform: translateY(100%); transition: transform 0.3s ease; }
 .modal-overlay.open .modal { transform: translateY(0); }
 .modal-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-.modal-text { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+.modal-text { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
+.modal-warning { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px; padding: 12px; margin: 12px 0; font-size: 13px; color: #991B1B; line-height: 1.6; }
 .modal-actions { display: flex; gap: 10px; }
 .modal-actions button { flex:1; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 600; }
 .modal-confirm { background: var(--orange); color: white; }
 .modal-cancel { background: var(--bg); color: var(--text); }
 
-/* ── Loading / Empty ── */
 .loading { text-align:center; padding: 40px 20px; color: var(--text-muted); font-size: 14px; }
 .spinner { width:32px; height:32px; border: 3px solid var(--border); border-top-color: var(--orange); border-radius:50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .empty { text-align:center; padding: 40px 20px; color: var(--text-muted); font-size: 14px; }
 .refresh-btn { display:block; margin: 16px auto 0; background: var(--orange); color: white; padding: 10px 24px; border-radius: 10px; font-size: 13px; font-weight: 600; }
-.refresh-btn:active { transform: scale(0.95); }
-
-/* ── See More Toggle ── */
 .see-more-btn { display:block; width:100%; padding: 10px; border-radius: var(--radius); border: 1px solid var(--border); background: none; color: var(--text-muted); font-size: 13px; font-weight: 600; margin-bottom: 10px; cursor: pointer; }
-.see-more-btn:active { background: var(--bg); }
-
-/* ── Toast ── */
 .toast { position:fixed; bottom: 20px; left:50%; transform: translateX(-50%) translateY(80px); background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 12px; font-size: 13px; font-weight: 500; z-index: 300; transition: transform 0.3s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
-
 <div id="app"></div>
-
 <script>
 const CONFIG = {
   APP_NAME: 'ATS Stock & Orders',
@@ -151,125 +135,92 @@ const CONFIG = {
   WEBHOOK_STOCK: 'https://hooks.zapier.com/hooks/catch/24033816/uph15m4/',
   ORDERS_TAB: 'ATS Orders',
   STOCK_TAB: 'ATS Stock',
-  SHOW_BUSINESSES: ['ATS'],
   STANDARD_STATUSES: ['Order Created', 'Order Confirmed', 'Being Packed', 'Shipped'],
   SPECIAL_STATUSES: ['Order Created', 'Order Confirmed', 'Being Made', 'At Galvanisers', 'Being Packed', 'Shipped'],
-  USERS: [
-    { name: 'Steve', pin: '3333', role: 'fabricator' }
-  ],
+  USERS: [{ name: 'Steve', pin: '3333', role: 'fabricator' }],
   THEME_COLOR: '#E85D26'
 };
 
 let state = {
-  screen: 'login',
-  selectedUser: null,
-  currentUser: null,
-  pin: '',
-  pinError: '',
-  activeTab: 'orders',
-  orders: [],
-  stock: { standard: [], odd: [] },
-  loading: false,
-  editingStock: null,
-  addingOddStock: false,
-  showAllArchived: false,
-  modal: null,
-  toast: ''
+  screen: 'login', selectedUser: null, currentUser: null,
+  pin: '', pinError: '', activeTab: 'orders',
+  orders: [], stock: { standard: [], odd: [] },
+  loading: false, editingStock: null, addingOddStock: false,
+  showAllArchived: false, modal: null, toast: ''
 };
 
-// ═══════════════════════════════════════════
-// GOOGLE SHEETS API
-// ═══════════════════════════════════════════
+// ── Google Sheets ──
 async function fetchSheet(tabName, range) {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.SHEET_ID}/values/${encodeURIComponent(tabName)}!${range}?key=${CONFIG.API_KEY}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Sheet fetch failed: ${res.status}`);
-  const data = await res.json();
-  return data.values || [];
+  return (await res.json()).values || [];
 }
 
 async function loadOrders() {
   const rows = await fetchSheet(CONFIG.ORDERS_TAB, 'A2:I100');
-  return rows.map(r => ({
-    orderPO: r[0] || '',
-    invNo: r[1] || '',
-    customer: r[2] || '',
-    email: r[3] || '',
-    products: r[4] || '',
-    qty: r[5] || '',
-    dateOrdered: r[6] || '',
-    status: r[7] || 'Order Created',
-    lastUpdated: r[8] || ''
-  }));
+  return rows.map(r => ({ orderPO: r[0]||'', invNo: r[1]||'', customer: r[2]||'', email: r[3]||'', products: r[4]||'', qty: r[5]||'', dateOrdered: r[6]||'', status: r[7]||'Order Created', lastUpdated: r[8]||'' }));
 }
 
 async function loadStockFixed() {
   const rows = await fetchSheet(CONFIG.STOCK_TAB, 'A1:H50');
-  const standard = [];
-  const odd = [];
+  const standard = [], odd = [];
   let section = null;
-
   for (let i = 0; i < rows.length; i++) {
     const r = rows[i];
     if (!r || r.every(c => !c)) continue;
-    const firstCell = (r[0] || '').trim();
-    if (firstCell === 'Standard Stock') { section = 'standard'; continue; }
-    if (firstCell === 'Odd Stock') { section = 'odd'; continue; }
+    const fc = (r[0]||'').trim();
+    if (fc === 'Standard Stock') { section = 'standard'; continue; }
+    if (fc === 'Odd Stock') { section = 'odd'; continue; }
     if (section === 'standard') {
-      const code = (r[1] || '').trim();
+      const code = (r[1]||'').trim();
       if (!code || code === 'Product Code') continue;
-      standard.push({ sheetRow: i + 1, productCode: code, qty: r[2] || '0', qtyInProd: r[3] || '', dueDate: r[4] || '', qtyBackOrder: r[5] || '', who: r[6] || '', notes: r[7] || '' });
+      standard.push({ sheetRow: i+1, productCode: code, qty: r[2]||'0', qtyInProd: r[3]||'', dueDate: r[4]||'', qtyBackOrder: r[5]||'', who: r[6]||'', notes: r[7]||'' });
     } else if (section === 'odd') {
-      const code = (r[1] || '').trim();
+      const code = (r[1]||'').trim();
       if (!code || code === 'Product Code') continue;
-      odd.push({ sheetRow: i + 1, productCode: code, qty: r[2] || '0', notes: r[3] || '' });
+      odd.push({ sheetRow: i+1, productCode: code, qty: r[2]||'0', notes: r[3]||'' });
     }
   }
   return { standard, odd };
 }
 
-// ═══════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════
+// ── Helpers ──
 function parseOrderDate(dateStr) {
   if (!dateStr || dateStr === '-' || dateStr === '—') return null;
   const s = String(dateStr).trim();
-  // Try common formats: DD/MM/YYYY, D/M/YYYY, YYYY-MM-DD, DD-MM-YYYY
-  let d;
   const dmY = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-  if (dmY) { d = new Date(parseInt(dmY[3]), parseInt(dmY[2]) - 1, parseInt(dmY[1])); }
-  else { d = new Date(s); }
+  const d = dmY ? new Date(parseInt(dmY[3]), parseInt(dmY[2])-1, parseInt(dmY[1])) : new Date(s);
   return isNaN(d) ? null : d;
 }
 
 function isWithin3Months(dateStr) {
   const d = parseOrderDate(dateStr);
-  if (!d) return true; // if unparseable, show it
-  const cutoff = new Date();
-  cutoff.setMonth(cutoff.getMonth() - 3);
+  if (!d) return true;
+  const cutoff = new Date(); cutoff.setMonth(cutoff.getMonth()-3);
   return d >= cutoff;
 }
 
 function cleanProducts(productsStr, qtyStr) {
   const products = productsStr.split(',').map(p => p.trim()).filter(p => p && p !== '-');
   const qtys = qtyStr.split(',').map(q => q.trim()).filter(q => q && q !== '-');
-  if (products.length === 0) return { display: '—', codes: [] };
+  if (products.length === 0) return { display: '—', codes: [], qtys: [] };
   const parts = products.map((p, i) => qtys[i] && qtys[i] !== '0' ? `${p} (${qtys[i]})` : p);
-  return { display: parts.join(', '), codes: products };
+  return { display: parts.join(', '), codes: products, qtys };
 }
 
 function formatDueDate(val) {
   if (!val || val === '-' || val === '—') return '—';
   const s = String(val).trim();
   if (s.includes('/')) return s;
-  if (/^\d{4}$/.test(s)) return s.slice(0, 2) + '/' + s.slice(2);
-  if (/^\d{3}$/.test(s)) return s.slice(0, 1) + '/' + s.slice(1);
+  if (/^\d{4}$/.test(s)) return s.slice(0,2)+'/'+s.slice(2);
+  if (/^\d{3}$/.test(s)) return s.slice(0,1)+'/'+s.slice(1);
   return s;
 }
 
 function isStandardOrder(productCodes) {
-  const standardCodes = state.stock.standard.map(s => s.productCode.toUpperCase());
-  return productCodes.every(code => standardCodes.includes(code.toUpperCase()));
+  const stdCodes = state.stock.standard.map(s => s.productCode.toUpperCase());
+  return productCodes.every(c => stdCodes.includes(c.toUpperCase()));
 }
 
 function getStatusesForOrder(order) {
@@ -278,47 +229,83 @@ function getStatusesForOrder(order) {
   return isStandardOrder(codes) ? CONFIG.STANDARD_STATUSES : CONFIG.SPECIAL_STATUSES;
 }
 
-// ═══════════════════════════════════════════
-// ZAPIER WEBHOOKS
-// ═══════════════════════════════════════════
+function hasStockAlerts() {
+  return state.stock.standard.some(s => {
+    const qty = parseInt(s.qty) || 0;
+    const bo = parseInt(s.qtyBackOrder) || 0;
+    return qty === 0 || bo > 0;
+  });
+}
+
+// ── Stock Deduction ──
+function calculateStockImpact(order) {
+  const { codes, qtys } = cleanProducts(order.products, order.qty);
+  const impacts = [];
+  codes.forEach((code, i) => {
+    const stockItem = state.stock.standard.find(s => s.productCode.toUpperCase() === code.toUpperCase());
+    if (!stockItem) return;
+    const orderQty = parseInt(qtys[i]) || 1;
+    const currentQty = parseInt(stockItem.qty) || 0;
+    const newQty = currentQty - orderQty;
+    impacts.push({
+      stockItem, code, orderQty, currentQty,
+      newQty: Math.max(0, newQty),
+      backOrderQty: newQty < 0 ? Math.abs(newQty) : 0
+    });
+  });
+  return impacts;
+}
+
+async function applyStockDeductions(order, impacts) {
+  const today = new Date().toLocaleDateString('en-GB');
+  for (const impact of impacts) {
+    const s = impact.stockItem;
+    s.qty = String(impact.newQty);
+    if (impact.backOrderQty > 0) {
+      const currentBO = parseInt(s.qtyBackOrder) || 0;
+      s.qtyBackOrder = String(currentBO + impact.backOrderQty);
+      const currentWho = s.who && s.who !== '—' && s.who !== '-' ? s.who : '';
+      s.who = currentWho ? currentWho + ', ' + order.customer : order.customer;
+      const noteEntry = `${impact.backOrderQty} on back order for ${order.customer} (${order.orderPO}) — ${today}`;
+      const currentNotes = s.notes && s.notes !== '—' && s.notes !== '-' ? s.notes : '';
+      s.notes = currentNotes ? currentNotes + '; ' + noteEntry : noteEntry;
+    }
+    await updateStock(s.productCode, CONFIG.STOCK_TAB, {
+      qty: s.qty, qtyBackOrder: s.qtyBackOrder || '-', who: s.who || '-', notes: s.notes || '-'
+    });
+  }
+}
+
+// ── Webhooks ──
 async function updateStatus(orderPO, newStatus) {
   try {
-    await fetch(CONFIG.WEBHOOK_STATUS, { method: 'POST', body: JSON.stringify({ orderPO, newStatus, timestamp: new Date().toISOString(), business: 'Advanced Traffic Supplies' }) });
+    await fetch(CONFIG.WEBHOOK_STATUS, { method:'POST', body: JSON.stringify({ orderPO, newStatus, timestamp: new Date().toISOString(), business: 'Advanced Traffic Supplies' }) });
     return true;
-  } catch (e) { showToast('❌ Failed to update status'); return false; }
+  } catch(e) { showToast('❌ Failed to update status'); return false; }
 }
 
 async function updateStock(productCode, tab, data) {
   try {
-    await fetch(CONFIG.WEBHOOK_STOCK, { method: 'POST', body: JSON.stringify({ productCode, tab, ...data, timestamp: new Date().toISOString() }) });
+    await fetch(CONFIG.WEBHOOK_STOCK, { method:'POST', body: JSON.stringify({ productCode, tab, ...data, timestamp: new Date().toISOString() }) });
     return true;
-  } catch (e) { showToast('❌ Failed to update stock'); return false; }
+  } catch(e) { showToast('❌ Failed to update stock'); return false; }
 }
 
 function showToast(msg) {
-  state.toast = msg;
-  render();
+  state.toast = msg; render();
   setTimeout(() => { state.toast = ''; render(); }, 2500);
 }
 
 async function loadData() {
-  state.loading = true;
-  render();
+  state.loading = true; render();
   try {
     const [orders, stock] = await Promise.all([loadOrders(), loadStockFixed()]);
-    state.orders = orders;
-    state.stock = stock;
-  } catch (e) {
-    console.error('Load error:', e);
-    showToast('❌ Failed to load data — check sheet sharing settings');
-  }
-  state.loading = false;
-  render();
+    state.orders = orders; state.stock = stock;
+  } catch(e) { showToast('❌ Failed to load data'); }
+  state.loading = false; render();
 }
 
-// ═══════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════
+// ── Render ──
 function render() {
   const app = document.getElementById('app');
   if (state.screen === 'login') app.innerHTML = renderLogin();
@@ -328,44 +315,36 @@ function render() {
 }
 
 function renderLogin() {
-  return `
-    <div class="login-wrap">
-      <div class="login-box">
-        <img src="icon-192.png" style="width:60px;height:60px;border-radius:12px;margin-bottom:16px;">
-        <div class="login-brand">Advanced Traffic Supplies</div>
-        <div class="login-title">Stock & Orders</div>
-        <div class="login-subtitle">Who's logging in?</div>
-        ${CONFIG.USERS.map(u => `<button class="login-user-btn" data-user="${u.name}">${u.name}</button>`).join('')}
-      </div>
-    </div>`;
+  return `<div class="login-wrap"><div class="login-box">
+    <img src="icon-192.png" style="width:60px;height:60px;border-radius:12px;margin-bottom:16px;">
+    <div class="login-brand">Advanced Traffic Supplies</div>
+    <div class="login-title">Stock & Orders</div>
+    <div class="login-subtitle">Who's logging in?</div>
+    ${CONFIG.USERS.map(u => `<button class="login-user-btn" data-user="${u.name}">${u.name}</button>`).join('')}
+  </div></div>`;
 }
 
 function renderLoginPin() {
   const dots = [0,1,2,3].map(i => `<div class="pin-dot ${i < state.pin.length ? 'filled' : ''}"></div>`).join('');
-  const nums = [1,2,3,4,5,6,7,8,9,null,0,'←'].map(d => {
-    if (d === null) return '<div></div>';
-    return `<button class="pin-btn" data-digit="${d}">${d}</button>`;
-  }).join('');
-  return `
-    <div class="login-wrap">
-      <div class="login-box">
-        <img src="icon-192.png" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;">
-        <div class="login-subtitle">Welcome back,</div>
-        <div class="login-name">${state.selectedUser}</div>
-        <div class="pin-dots ${state.pinError ? 'shake' : ''}">${dots}</div>
-        <div class="pin-error">${state.pinError}</div>
-        <div class="pin-grid">${nums}</div>
-        <button class="login-back" data-action="back-login">Back</button>
-      </div>
-    </div>`;
+  const nums = [1,2,3,4,5,6,7,8,9,null,0,'←'].map(d => d===null ? '<div></div>' : `<button class="pin-btn" data-digit="${d}">${d}</button>`).join('');
+  return `<div class="login-wrap"><div class="login-box">
+    <img src="icon-192.png" style="width:50px;height:50px;border-radius:10px;margin-bottom:12px;">
+    <div class="login-subtitle">Welcome back,</div>
+    <div class="login-name">${state.selectedUser}</div>
+    <div class="pin-dots ${state.pinError ? 'shake' : ''}">${dots}</div>
+    <div class="pin-error">${state.pinError}</div>
+    <div class="pin-grid">${nums}</div>
+    <button class="login-back" data-action="back-login">Back</button>
+  </div></div>`;
 }
 
 function renderApp() {
   const activeOrders = state.orders.filter(o => o.status !== 'Shipped');
   const allArchived = state.orders.filter(o => o.status === 'Shipped');
-  let content = '';
-  if (state.activeTab === 'orders') content = renderOrdersTab(activeOrders, allArchived);
-  else content = renderStockTab();
+  const stockAlert = hasStockAlerts();
+  let content = state.loading
+    ? '<div class="loading"><div class="spinner"></div>Loading data...</div>'
+    : (state.activeTab === 'orders' ? renderOrdersTab(activeOrders, allArchived) : renderStockTab());
 
   const modal = state.modal ? renderModal() : '';
   const toast = state.toast ? `<div class="toast show">${state.toast}</div>` : '<div class="toast"></div>';
@@ -379,49 +358,27 @@ function renderApp() {
       <button class="logout-btn" data-action="logout">Logout</button>
     </div>
     <div class="tab-bar">
-      <button class="tab-btn ${state.activeTab === 'orders' ? 'active' : ''}" data-tab="orders">Orders</button>
-      <button class="tab-btn ${state.activeTab === 'stock' ? 'active' : ''}" data-tab="stock">Stock</button>
+      <button class="tab-btn ${state.activeTab==='orders'?'active':''}" data-tab="orders">Orders</button>
+      <button class="tab-btn ${state.activeTab==='stock'?'active':''}" data-tab="stock">
+        Stock${stockAlert ? '<span class="tab-alert-dot"></span>' : ''}
+      </button>
     </div>
-    <div class="content">
-      ${state.loading ? '<div class="loading"><div class="spinner"></div>Loading data...</div>' : content}
-      <button class="refresh-btn" data-action="refresh">↻ Refresh</button>
-    </div>
-    ${modal}
-    ${toast}`;
+    <div class="content">${content}<button class="refresh-btn" data-action="refresh">↻ Refresh</button></div>
+    ${modal}${toast}`;
 }
 
 function renderOrdersTab(active, allArchived) {
-  // Filter to last 3 months only, then sort newest first (oldest at bottom)
   let archived = allArchived.filter(o => isWithin3Months(o.dateOrdered));
-  archived.sort((a, b) => {
-    const da = parseOrderDate(a.dateOrdered);
-    const db = parseOrderDate(b.dateOrdered);
-    if (!da && !db) return 0;
-    if (!da) return 1;
-    if (!db) return -1;
-    return db - da; // newest first → oldest at bottom
-  });
-
-  const totalArchived = archived.length;
-  const visibleArchived = state.showAllArchived ? archived : archived.slice(0, 3);
-
+  archived.sort((a, b) => { const da=parseOrderDate(a.dateOrdered), db=parseOrderDate(b.dateOrdered); if(!da&&!db)return 0; if(!da)return 1; if(!db)return -1; return db-da; });
+  const visibleArchived = state.showAllArchived ? archived : archived.slice(0,3);
   let html = '';
-  if (active.length === 0 && archived.length === 0) {
-    html += '<div class="empty">No orders yet</div>';
-  } else {
-    if (active.length > 0) {
-      html += '<div class="section-title">Active Orders</div>';
-      active.forEach((o, i) => { html += renderOrderCard(o, i, true); });
-    }
+  if (active.length===0 && archived.length===0) { html += '<div class="empty">No orders yet</div>'; }
+  else {
+    if (active.length > 0) { html += '<div class="section-title">Active Orders</div>'; active.forEach((o,i) => { html += renderOrderCard(o,i,true); }); }
     if (archived.length > 0) {
       html += '<div class="section-title">Archived</div>';
-      visibleArchived.forEach((o, i) => { html += renderOrderCard(o, i, false); });
-      if (totalArchived > 3) {
-        const remaining = totalArchived - 3;
-        html += `<button class="see-more-btn" data-action="toggle-archived">
-          ${state.showAllArchived ? '▲ Show less' : `▼ Show ${remaining} more`}
-        </button>`;
-      }
+      visibleArchived.forEach((o,i) => { html += renderOrderCard(o,i,false); });
+      if (archived.length > 3) html += `<button class="see-more-btn" data-action="toggle-archived">${state.showAllArchived ? '▲ Show less' : `▼ Show ${archived.length-3} more`}</button>`;
     }
   }
   return html;
@@ -430,171 +387,152 @@ function renderOrdersTab(active, allArchived) {
 function renderOrderCard(order, idx, canAdvance) {
   const statuses = getStatusesForOrder(order);
   const { display, codes } = cleanProducts(order.products, order.qty);
-  const isStandard = codes.length > 0 && isStandardOrder(codes);
+  const isStd = codes.length > 0 && isStandardOrder(codes);
   const currentIdx = statuses.indexOf(order.status);
-  const nextStatus = currentIdx < statuses.length - 1 ? statuses[currentIdx + 1] : null;
-  const flowLabel = isStandard ? 'Standard' : 'Special';
-
+  const nextStatus = currentIdx < statuses.length-1 ? statuses[currentIdx+1] : null;
+  const flowLabel = isStd ? 'Standard' : 'Special';
   return `
     <div class="order-card" data-status="${order.status}">
       <div class="order-top">
-        <span class="order-po">${order.orderPO || 'No PO'} <span style="font-size:10px;font-weight:600;color:${isStandard ? 'var(--green)' : 'var(--purple)'};background:${isStandard ? '#F0FDF4' : '#F5F3FF'};padding:2px 6px;border-radius:4px;">${flowLabel}</span></span>
+        <span class="order-po">${order.orderPO||'No PO'} <span style="font-size:10px;font-weight:600;color:${isStd?'var(--green)':'var(--purple)'};background:${isStd?'#F0FDF4':'#F5F3FF'};padding:2px 6px;border-radius:4px;">${flowLabel}</span></span>
         <span class="order-date">${order.dateOrdered}</span>
       </div>
       <div class="order-customer">${order.customer}</div>
       <div class="order-product">${display}</div>
       <div class="order-bottom">
-        <span style="font-size:13px;font-weight:600;color:${
-          order.status === 'Order Created' ? 'var(--grey)' :
-          order.status === 'Order Confirmed' ? 'var(--blue)' :
-          order.status === 'Being Made' ? 'var(--amber)' :
-          order.status === 'At Galvanisers' ? 'var(--purple)' :
-          order.status === 'Being Packed' ? 'var(--green)' :
-          'var(--grey)'};">${order.status}</span>
-        ${canAdvance && nextStatus ? `<span class="status-badge clickable" data-status="${nextStatus}"
-              data-action="advance-status" data-po="${order.orderPO}" data-next="${nextStatus}">
-          ${nextStatus}
-        </span>` : ''}
+        <span style="font-size:13px;font-weight:600;color:${order.status==='Order Created'?'var(--grey)':order.status==='Order Confirmed'?'var(--blue)':order.status==='Being Made'?'var(--amber)':order.status==='At Galvanisers'?'var(--purple)':order.status==='Being Packed'?'var(--green)':'var(--grey)'};">${order.status}</span>
+        ${canAdvance && nextStatus ? `<span class="status-badge clickable" data-status="${nextStatus}" data-action="advance-status" data-po="${order.orderPO}" data-next="${nextStatus}">${nextStatus}</span>` : ''}
       </div>
     </div>`;
 }
 
 function renderStockTab() {
-  let html = '';
-  html += '<div class="section-title">Standard Stock</div>';
-  if (state.stock.standard.length === 0) html += '<div class="empty">No standard stock data</div>';
-  state.stock.standard.forEach((s, i) => {
+  let html = '<div class="section-title">Standard Stock</div>';
+  if (state.stock.standard.length===0) html += '<div class="empty">No standard stock data</div>';
+  state.stock.standard.forEach((s,i) => {
     const editing = state.editingStock === `std-${i}`;
+    const qty = parseInt(s.qty)||0;
+    const bo = parseInt(s.qtyBackOrder)||0;
+    const alert = qty===0 || bo>0;
     html += `
-      <div class="stock-card" data-stock-id="std-${i}">
-        <div class="stock-code">${s.productCode}</div>
-        <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value">${editing ? `<input type="number" data-field="qty" value="${s.qty}">` : s.qty}</span></div>
-        <div class="stock-row"><span class="stock-label">In Production</span><span class="stock-value">${editing ? `<input type="number" data-field="qtyInProd" value="${s.qtyInProd}">` : (s.qtyInProd || '—')}</span></div>
-        <div class="stock-row"><span class="stock-label">Due Date</span><span class="stock-value">${editing ? `<input type="text" data-field="dueDate" value="${s.dueDate}" placeholder="DD/MM">` : formatDueDate(s.dueDate)}</span></div>
-        <div class="stock-row"><span class="stock-label">Back Order</span><span class="stock-value">${editing ? `<input type="number" data-field="qtyBackOrder" value="${s.qtyBackOrder}">` : (s.qtyBackOrder || '—')}</span></div>
-        <div class="stock-row"><span class="stock-label">Who?</span><span class="stock-value">${editing ? `<input type="text" data-field="who" value="${s.who}">` : (s.who || '—')}</span></div>
-        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value">${editing ? `<input type="text" data-field="notes" value="${s.notes}" placeholder="e.g. missing x member" style="width:160px;">` : (s.notes || '—')}</span></div>
-        ${editing ? `
-          <div class="stock-save-row">
-            <button class="stock-cancel-btn" data-action="cancel-edit">Cancel</button>
-            <button class="stock-save-btn" data-action="save-stock" data-section="standard" data-idx="${i}">Save</button>
-          </div>` : `
-          <div class="stock-save-row">
-            <button class="stock-save-btn" data-action="edit-stock" data-stock-id="std-${i}" style="background:var(--bg);color:var(--text);">Edit</button>
-          </div>`}
+      <div class="stock-card ${alert?'stock-alert':''}" data-stock-id="std-${i}">
+        <div class="stock-code">${s.productCode}${alert ? `<span class="stock-alert-badge">⚠️ ${qty===0?'Out of stock':''}${qty===0&&bo>0?' · ':''}${bo>0?`${bo} on back order`:''}</span>` : ''}</div>
+        <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value">${editing?`<input type="number" data-field="qty" value="${s.qty}">`:s.qty}</span></div>
+        <div class="stock-row"><span class="stock-label">In Production</span><span class="stock-value">${editing?`<input type="number" data-field="qtyInProd" value="${s.qtyInProd}">`:(s.qtyInProd||'—')}</span></div>
+        <div class="stock-row"><span class="stock-label">Due Date</span><span class="stock-value">${editing?`<input type="text" data-field="dueDate" value="${s.dueDate}" placeholder="DD/MM">`:formatDueDate(s.dueDate)}</span></div>
+        <div class="stock-row"><span class="stock-label">Back Order</span><span class="stock-value" style="${bo>0?'color:var(--red);':''}">${editing?`<input type="number" data-field="qtyBackOrder" value="${s.qtyBackOrder}">`:(s.qtyBackOrder||'—')}</span></div>
+        <div class="stock-row"><span class="stock-label">Who?</span><span class="stock-value">${editing?`<input type="text" data-field="who" value="${s.who}" style="width:160px;">`:(s.who||'—')}</span></div>
+        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value">${editing?`<input type="text" data-field="notes" value="${s.notes}" placeholder="notes" style="width:160px;">`:(s.notes||'—')}</span></div>
+        ${editing ? `<div class="stock-save-row"><button class="stock-cancel-btn" data-action="cancel-edit">Cancel</button><button class="stock-save-btn" data-action="save-stock" data-section="standard" data-idx="${i}">Save</button></div>`
+          : `<div class="stock-save-row"><button class="stock-save-btn" data-action="edit-stock" data-stock-id="std-${i}" style="background:var(--bg);color:var(--text);">Edit</button></div>`}
       </div>`;
   });
 
   html += '<div class="section-title">Odd Stock</div>';
-  if (state.stock.odd.length === 0 && !state.addingOddStock) html += '<div class="empty">No odd stock data</div>';
-  state.stock.odd.forEach((s, i) => {
+  if (state.stock.odd.length===0 && !state.addingOddStock) html += '<div class="empty">No odd stock data</div>';
+  state.stock.odd.forEach((s,i) => {
     const editing = state.editingStock === `odd-${i}`;
     html += `
       <div class="stock-card" data-stock-id="odd-${i}">
         <div class="stock-code">${s.productCode}</div>
-        <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value">${editing ? `<input type="number" data-field="qty" value="${s.qty}">` : s.qty}</span></div>
-        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value">${editing ? `<input type="text" data-field="notes" value="${s.notes || ''}" placeholder="e.g. missing x member" style="width:160px;">` : (s.notes || '—')}</span></div>
-        ${editing ? `
-          <div class="stock-save-row">
-            <button class="stock-cancel-btn" data-action="cancel-edit">Cancel</button>
-            <button class="stock-save-btn" data-action="save-stock" data-section="odd" data-idx="${i}">Save</button>
-          </div>` : `
-          <div class="stock-save-row">
-            <button class="stock-save-btn" data-action="edit-stock" data-stock-id="odd-${i}" style="background:var(--bg);color:var(--text);">Edit</button>
-          </div>`}
+        <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value">${editing?`<input type="number" data-field="qty" value="${s.qty}">`:s.qty}</span></div>
+        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value">${editing?`<input type="text" data-field="notes" value="${s.notes||''}" style="width:160px;">`:(s.notes||'—')}</span></div>
+        ${editing ? `<div class="stock-save-row"><button class="stock-cancel-btn" data-action="cancel-edit">Cancel</button><button class="stock-save-btn" data-action="save-stock" data-section="odd" data-idx="${i}">Save</button></div>`
+          : `<div class="stock-save-row"><button class="stock-save-btn" data-action="edit-stock" data-stock-id="odd-${i}" style="background:var(--bg);color:var(--text);">Edit</button></div>`}
       </div>`;
   });
 
   if (state.addingOddStock) {
-    html += `
-      <div class="stock-card" style="border:2px dashed var(--orange);">
-        <div class="stock-row"><span class="stock-label">Product Code</span><span class="stock-value"><input type="text" id="new-odd-code" placeholder="e.g. WC7575D" style="width:140px;"></span></div>
-        <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value"><input type="number" id="new-odd-qty" value="0"></span></div>
-        <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value"><input type="text" id="new-odd-notes" placeholder="Optional" style="width:160px;"></span></div>
-        <div class="stock-save-row">
-          <button class="stock-cancel-btn" data-action="cancel-add-odd">Cancel</button>
-          <button class="stock-save-btn" data-action="save-new-odd">Add</button>
-        </div>
-      </div>`;
+    html += `<div class="stock-card" style="border:2px dashed var(--orange);">
+      <div class="stock-row"><span class="stock-label">Product Code</span><span class="stock-value"><input type="text" id="new-odd-code" placeholder="e.g. WC7575D" style="width:140px;"></span></div>
+      <div class="stock-row"><span class="stock-label">QTY</span><span class="stock-value"><input type="number" id="new-odd-qty" value="0"></span></div>
+      <div class="stock-row"><span class="stock-label">Notes</span><span class="stock-value"><input type="text" id="new-odd-notes" placeholder="Optional" style="width:160px;"></span></div>
+      <div class="stock-save-row"><button class="stock-cancel-btn" data-action="cancel-add-odd">Cancel</button><button class="stock-save-btn" data-action="save-new-odd">Add</button></div>
+    </div>`;
   } else {
-    html += `<button data-action="add-odd-stock" style="display:block;width:100%;padding:12px;border-radius:var(--radius);border:2px dashed var(--border);background:none;color:var(--text-muted);font-size:13px;font-weight:600;margin-bottom:10px;cursor:pointer;">+ Add Odd Stock Product</button>`;
+    html += `<button data-action="add-odd-stock" style="display:block;width:100%;padding:12px;border-radius:var(--radius);border:2px dashed var(--border);background:none;color:var(--text-muted);font-size:13px;font-weight:600;margin-bottom:10px;">+ Add Odd Stock Product</button>`;
   }
   return html;
 }
 
 function renderModal() {
   const m = state.modal;
-  return `
-    <div class="modal-overlay open" data-action="close-modal">
-      <div class="modal" onclick="event.stopPropagation()">
-        <div class="modal-title">${m.title}</div>
-        <div class="modal-text">${m.text}</div>
-        <div class="modal-actions">
-          <button class="modal-cancel" data-action="close-modal">Cancel</button>
-          <button class="modal-confirm" data-action="confirm-modal">Confirm</button>
-        </div>
+  return `<div class="modal-overlay open" data-action="close-modal">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-title">${m.title}</div>
+      <div class="modal-text">${m.text}</div>
+      ${m.warning ? `<div class="modal-warning">${m.warning}</div>` : ''}
+      <div class="modal-actions">
+        <button class="modal-cancel" data-action="close-modal">Cancel</button>
+        <button class="modal-confirm" data-action="confirm-modal">Confirm</button>
       </div>
-    </div>`;
+    </div>
+  </div>`;
 }
 
-// ═══════════════════════════════════════════
-// EVENTS
-// ═══════════════════════════════════════════
+// ── Events ──
 function attachEvents() {
   document.querySelectorAll('.login-user-btn').forEach(btn => {
-    btn.onclick = () => { state.selectedUser = btn.dataset.user; state.screen = 'loginPin'; state.pin = ''; state.pinError = ''; render(); };
+    btn.onclick = () => { state.selectedUser = btn.dataset.user; state.screen = 'loginPin'; state.pin=''; state.pinError=''; render(); };
   });
 
   document.querySelectorAll('.pin-btn').forEach(btn => {
     btn.onclick = () => {
       const d = btn.dataset.digit;
-      if (d === '←') { state.pin = state.pin.slice(0, -1); state.pinError = ''; render(); return; }
-      if (state.pin.length >= 4) return;
-      state.pin += d; state.pinError = ''; render();
-      if (state.pin.length === 4) {
-        const user = CONFIG.USERS.find(u => u.name === state.selectedUser && u.pin === state.pin);
+      if (d==='←') { state.pin=state.pin.slice(0,-1); state.pinError=''; render(); return; }
+      if (state.pin.length>=4) return;
+      state.pin+=d; state.pinError=''; render();
+      if (state.pin.length===4) {
+        const user = CONFIG.USERS.find(u => u.name===state.selectedUser && u.pin===state.pin);
         if (user) {
-          state.currentUser = user; state.screen = 'app';
-          try { localStorage.setItem('ats-user', JSON.stringify({ name: user.name, pin: user.pin })); } catch(e) {}
+          state.currentUser=user; state.screen='app';
+          try { localStorage.setItem('ats-user', JSON.stringify({name:user.name,pin:user.pin})); } catch(e){}
           loadData();
         } else {
-          state.pinError = 'Wrong PIN';
-          setTimeout(() => { state.pin = ''; render(); }, 400);
+          state.pinError='Wrong PIN';
+          setTimeout(()=>{ state.pin=''; render(); },400);
           render();
         }
       }
     };
   });
 
-  document.querySelectorAll('[data-action="back-login"]').forEach(el => {
-    el.onclick = () => { state.screen = 'login'; state.pin = ''; state.pinError = ''; render(); };
-  });
-
-  document.querySelectorAll('[data-action="logout"]').forEach(el => {
-    el.onclick = () => { state.screen = 'login'; state.currentUser = null; state.pin = ''; try { localStorage.removeItem('ats-user'); } catch(e) {} render(); };
-  });
-
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.onclick = () => { state.activeTab = btn.dataset.tab; state.showAllArchived = false; render(); };
-  });
-
-  document.querySelectorAll('[data-action="refresh"]').forEach(el => { el.onclick = () => loadData(); });
-
-  document.querySelectorAll('[data-action="toggle-archived"]').forEach(el => {
-    el.onclick = () => { state.showAllArchived = !state.showAllArchived; render(); };
-  });
+  document.querySelectorAll('[data-action="back-login"]').forEach(el => { el.onclick=()=>{ state.screen='login'; state.pin=''; state.pinError=''; render(); }; });
+  document.querySelectorAll('[data-action="logout"]').forEach(el => { el.onclick=()=>{ state.screen='login'; state.currentUser=null; state.pin=''; try{localStorage.removeItem('ats-user');}catch(e){} render(); }; });
+  document.querySelectorAll('.tab-btn').forEach(btn => { btn.onclick=()=>{ state.activeTab=btn.dataset.tab; state.showAllArchived=false; render(); }; });
+  document.querySelectorAll('[data-action="refresh"]').forEach(el => { el.onclick=()=>loadData(); });
+  document.querySelectorAll('[data-action="toggle-archived"]').forEach(el => { el.onclick=()=>{ state.showAllArchived=!state.showAllArchived; render(); }; });
 
   document.querySelectorAll('[data-action="advance-status"]').forEach(el => {
     el.onclick = () => {
-      const po = el.dataset.po; const next = el.dataset.next;
+      const po = el.dataset.po;
+      const next = el.dataset.next;
+      const order = state.orders.find(o => o.orderPO === po);
+      let warningHtml = '';
+      let impacts = [];
+
+      if (next === 'Order Confirmed' && order) {
+        impacts = calculateStockImpact(order);
+        const backOrders = impacts.filter(i => i.backOrderQty > 0);
+        if (backOrders.length > 0) {
+          warningHtml = '⚠️ Stock warning:<br>' + backOrders.map(i =>
+            `• <strong>${i.code}</strong>: only ${i.currentQty} in stock — ${i.backOrderQty} will go on back order`
+          ).join('<br>');
+        }
+      }
+
       state.modal = {
         title: 'Update Status',
         text: `Move <strong>${po}</strong> to <strong>${next}</strong>?`,
+        warning: warningHtml || null,
         onConfirm: async () => {
+          if (next === 'Order Confirmed' && impacts.length > 0) {
+            await applyStockDeductions(order, impacts);
+          }
           const success = await updateStatus(po, next);
-          const order = state.orders.find(o => o.orderPO === po);
-          if (order) { order.status = next; order.lastUpdated = new Date().toISOString(); }
-          state.modal = null;
+          const o = state.orders.find(o => o.orderPO === po);
+          if (o) { o.status=next; o.lastUpdated=new Date().toISOString(); }
+          state.modal=null;
           showToast(success ? `✓ ${po} → ${next}` : `✓ Updated locally (webhook pending)`);
           render();
         }
@@ -603,63 +541,53 @@ function attachEvents() {
     };
   });
 
-  document.querySelectorAll('[data-action="edit-stock"]').forEach(el => {
-    el.onclick = () => { state.editingStock = el.dataset.stockId; render(); };
-  });
-  document.querySelectorAll('[data-action="cancel-edit"]').forEach(el => {
-    el.onclick = () => { state.editingStock = null; render(); };
-  });
+  document.querySelectorAll('[data-action="edit-stock"]').forEach(el => { el.onclick=()=>{ state.editingStock=el.dataset.stockId; render(); }; });
+  document.querySelectorAll('[data-action="cancel-edit"]').forEach(el => { el.onclick=()=>{ state.editingStock=null; render(); }; });
   document.querySelectorAll('[data-action="save-stock"]').forEach(el => {
     el.onclick = async () => {
-      const section = el.dataset.section; const idx = parseInt(el.dataset.idx);
-      const card = el.closest('.stock-card');
-      const inputs = card.querySelectorAll('input');
-      const data = {};
-      inputs.forEach(inp => { data[inp.dataset.field] = inp.value || '-'; });
-      if (section === 'standard') Object.assign(state.stock.standard[idx], data);
-      else Object.assign(state.stock.odd[idx], data);
-      const productCode = section === 'standard' ? state.stock.standard[idx].productCode : state.stock.odd[idx].productCode;
-      const success = await updateStock(productCode, CONFIG.STOCK_TAB, data);
-      state.editingStock = null;
-      showToast(success ? `✓ ${productCode} updated` : `✓ Updated locally (webhook pending)`);
+      const section=el.dataset.section, idx=parseInt(el.dataset.idx);
+      const inputs = el.closest('.stock-card').querySelectorAll('input');
+      const data={};
+      inputs.forEach(inp=>{ data[inp.dataset.field]=inp.value||'-'; });
+      if (section==='standard') Object.assign(state.stock.standard[idx],data);
+      else Object.assign(state.stock.odd[idx],data);
+      const pc = section==='standard' ? state.stock.standard[idx].productCode : state.stock.odd[idx].productCode;
+      const success = await updateStock(pc, CONFIG.STOCK_TAB, data);
+      state.editingStock=null;
+      showToast(success ? `✓ ${pc} updated` : `✓ Updated locally (webhook pending)`);
       render();
     };
   });
 
-  document.querySelectorAll('[data-action="close-modal"]').forEach(el => { el.onclick = () => { state.modal = null; render(); }; });
-  document.querySelectorAll('[data-action="confirm-modal"]').forEach(el => { el.onclick = () => { if (state.modal && state.modal.onConfirm) state.modal.onConfirm(); }; });
-
-  document.querySelectorAll('[data-action="add-odd-stock"]').forEach(el => { el.onclick = () => { state.addingOddStock = true; render(); }; });
-  document.querySelectorAll('[data-action="cancel-add-odd"]').forEach(el => { el.onclick = () => { state.addingOddStock = false; render(); }; });
+  document.querySelectorAll('[data-action="close-modal"]').forEach(el => { el.onclick=()=>{ state.modal=null; render(); }; });
+  document.querySelectorAll('[data-action="confirm-modal"]').forEach(el => { el.onclick=()=>{ if(state.modal?.onConfirm) state.modal.onConfirm(); }; });
+  document.querySelectorAll('[data-action="add-odd-stock"]').forEach(el => { el.onclick=()=>{ state.addingOddStock=true; render(); }; });
+  document.querySelectorAll('[data-action="cancel-add-odd"]').forEach(el => { el.onclick=()=>{ state.addingOddStock=false; render(); }; });
   document.querySelectorAll('[data-action="save-new-odd"]').forEach(el => {
     el.onclick = async () => {
-      const code = (document.getElementById('new-odd-code')?.value || '').trim();
-      const qty = document.getElementById('new-odd-qty')?.value || '0';
-      const notes = (document.getElementById('new-odd-notes')?.value || '').trim();
+      const code=(document.getElementById('new-odd-code')?.value||'').trim();
+      const qty=document.getElementById('new-odd-qty')?.value||'0';
+      const notes=(document.getElementById('new-odd-notes')?.value||'').trim();
       if (!code) { showToast('⚠️ Enter a product code'); return; }
-      state.stock.odd.push({ sheetRow: null, productCode: code, qty, notes });
-      const success = await updateStock(code, CONFIG.STOCK_TAB, { qty, notes, action: 'add-odd' });
-      state.addingOddStock = false;
+      state.stock.odd.push({sheetRow:null,productCode:code,qty,notes});
+      const success = await updateStock(code, CONFIG.STOCK_TAB, {qty,notes,action:'add-odd'});
+      state.addingOddStock=false;
       showToast(success ? `✓ ${code} added` : `✓ Added locally (webhook pending)`);
       render();
     };
   });
 }
 
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
+// ── Init ──
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
-
 try {
   const saved = localStorage.getItem('ats-user');
   if (saved) {
     const user = JSON.parse(saved);
-    const match = CONFIG.USERS.find(u => u.name === user.name && u.pin === user.pin);
-    if (match) { state.currentUser = match; state.screen = 'app'; loadData(); }
+    const match = CONFIG.USERS.find(u => u.name===user.name && u.pin===user.pin);
+    if (match) { state.currentUser=match; state.screen='app'; loadData(); }
   }
 } catch(e) {}
-
 render();
 </script>
 </body>
