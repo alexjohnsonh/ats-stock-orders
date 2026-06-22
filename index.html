@@ -360,7 +360,7 @@ function renderApp() {
     <div class="tab-bar">
       <button class="tab-btn ${state.activeTab==='orders'?'active':''}" data-tab="orders">Orders</button>
       <button class="tab-btn ${state.activeTab==='stock'?'active':''}" data-tab="stock">
-        Stock${stockAlert ? '<span class="tab-alert-dot"></span>' : ''}
+        Stock
       </button>
     </div>
     <div class="content">${content}<button class="refresh-btn" data-action="refresh">↻ Refresh</button></div>
