@@ -277,9 +277,9 @@ async function applyStockDeductions(order, impacts) {
 }
 
 // ── Webhooks ──
-async function updateStatus(orderPO, newStatus) {
+async function updateStatus(invNo, orderPO, newStatus) {
   try {
-    await fetch(CONFIG.WEBHOOK_STATUS, { method:'POST', body: JSON.stringify({ orderPO, newStatus, timestamp: new Date().toISOString(), business: 'Advanced Traffic Supplies' }) });
+    await fetch(CONFIG.WEBHOOK_STATUS, { method:'POST', body: JSON.stringify({ invNo, orderPO, newStatus, timestamp: new Date().toISOString(), business: 'Advanced Traffic Supplies' }) });
     return true;
   } catch(e) { showToast('❌ Failed to update status'); return false; }
 }
@@ -401,7 +401,7 @@ function renderOrderCard(order, idx, canAdvance) {
       <div class="order-product">${display}</div>
       <div class="order-bottom">
         <span style="font-size:13px;font-weight:600;color:${order.status==='Order Created'?'var(--grey)':order.status==='Order Confirmed'?'var(--blue)':order.status==='Being Made'?'var(--amber)':order.status==='At Galvanisers'?'var(--purple)':order.status==='Being Packed'?'var(--green)':'var(--grey)'};">${order.status}</span>
-        ${canAdvance && nextStatus ? `<span class="status-badge clickable" data-status="${nextStatus}" data-action="advance-status" data-po="${order.orderPO}" data-next="${nextStatus}">${nextStatus}</span>` : ''}
+        ${canAdvance && nextStatus ? `<span class="status-badge clickable" data-status="${nextStatus}" data-action="advance-status" data-inv="${order.invNo}" data-po="${order.orderPO}" data-next="${nextStatus}">${nextStatus}</span>` : ''}
       </div>
     </div>`;
 }
@@ -505,9 +505,10 @@ function attachEvents() {
 
   document.querySelectorAll('[data-action="advance-status"]').forEach(el => {
     el.onclick = () => {
+      const inv = el.dataset.inv;
       const po = el.dataset.po;
       const next = el.dataset.next;
-      const order = state.orders.find(o => o.orderPO === po);
+      const order = state.orders.find(o => o.invNo === inv);
       let warningHtml = '';
       let impacts = [];
 
@@ -529,8 +530,8 @@ function attachEvents() {
           if (next === 'Order Confirmed' && impacts.length > 0) {
             await applyStockDeductions(order, impacts);
           }
-          const success = await updateStatus(po, next);
-          const o = state.orders.find(o => o.orderPO === po);
+          const success = await updateStatus(inv, po, next);
+          const o = state.orders.find(o => o.invNo === inv);
           if (o) { o.status=next; o.lastUpdated=new Date().toISOString(); }
           state.modal=null;
           showToast(success ? `✓ ${po} → ${next}` : `✓ Updated locally (webhook pending)`);
