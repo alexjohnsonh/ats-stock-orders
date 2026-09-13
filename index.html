@@ -401,7 +401,7 @@ function renderOrderCard(order, idx, canAdvance) {
       <div class="order-product">${display}</div>
       <div class="order-bottom">
         <span style="font-size:13px;font-weight:600;color:${order.status==='Order Created'?'var(--grey)':order.status==='Order Confirmed'?'var(--blue)':order.status==='Being Made'?'var(--amber)':order.status==='At Galvanisers'?'var(--purple)':order.status==='Being Packed'?'var(--green)':'var(--grey)'};">${order.status}</span>
-        ${canAdvance && nextStatus ? `<span class="status-badge clickable" data-status="${nextStatus}" data-action="advance-status" data-inv="${order.invNo}" data-po="${order.orderPO}" data-next="${nextStatus}">${nextStatus}</span>` : ''}
+        ${canAdvance && nextStatus ? `<span class="status-badge clickable" data-status="${nextStatus}" data-action="advance-status" data-inv="${order.invNo}" data-po="${order.orderPO}" data-next="${nextStatus}" data-customer="${order.customer}" data-products="${order.products}" data-qty="${order.qty}" data-date="${order.dateOrdered}">${nextStatus}</span>` : ''}
       </div>
     </div>`;
 }
@@ -504,10 +504,29 @@ function attachEvents() {
   document.querySelectorAll('[data-action="toggle-archived"]').forEach(el => { el.onclick=()=>{ state.showAllArchived=!state.showAllArchived; render(); }; });
 
   document.querySelectorAll('[data-action="advance-status"]').forEach(el => {
-    el.onclick = () => {
-      const inv = el.dataset.inv;
+    el.onclick = async () => {
       const po = el.dataset.po;
       const next = el.dataset.next;
+      let inv = el.dataset.inv;
+
+      if (!inv) {
+        showToast('⏳ Checking for invoice number…');
+        const fresh = await loadOrders();
+        const rematch = fresh.find(o =>
+          o.orderPO === po && o.customer === el.dataset.customer &&
+          o.products === el.dataset.products && o.qty === el.dataset.qty && o.dateOrdered === el.dataset.date
+        );
+        if (rematch && rematch.invNo) {
+          state.orders = fresh;
+          inv = rematch.invNo;
+        }
+        if (!inv) {
+          showToast('⚠️ No invoice number on this order yet — check Xero/the sheet, then try again');
+          render();
+          return;
+        }
+      }
+
       const order = state.orders.find(o => o.invNo === inv);
       let warningHtml = '';
       let impacts = [];
